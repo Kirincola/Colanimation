@@ -23,15 +23,20 @@ public class MainActivity extends AppCompatActivity {
 
         final AnimeController controller = new AnimeController();
         binding.animationView.addController( controller );
-        controller.setValue( 200 );
-        binding.seek.setProgress( 40 );
-        binding.text.setText("200");
-        
-        binding.seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+        controller.setRadius( 200 );
+        binding.textRadius.setText("200");
+        binding.seekRadius.setProgress( 40 );
+
+        controller.setSpeed( 0.05f );
+        binding.textSpeed.setText("0.05");
+        binding.seekSpeed.setProgress( 50 );
+
+        binding.seekRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                controller.setValue( progress * 5 );
-                binding.text.setText( String.valueOf( progress * 5 ) );
+                controller.setRadius( progress * 5 );
+                binding.textRadius.setText( String.valueOf( progress * 5 ) );
             }
 
             @Override
@@ -44,26 +49,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-////        binding.seek.addTextChangedListener(new TextWatcher() {
-////            @Override
-////            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-////
-////            }
-////
-////            @Override
-////            public void onTextChanged(CharSequence s, int start, int before, int count) {
-////                try {
-////                    controller.setValue( Integer.parseInt( binding.text.getText().toString() ) );
-////                } catch( android.net.ParseException | NumberFormatException ignore ) {
-////
-////                }
-////
-////            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
+
+        binding.seekSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress *= 2;
+                controller.setSpeed( (float) ( progress / 1000.0) );
+                binding.textSpeed.setText( String.valueOf( progress / 1000.0) );
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 }

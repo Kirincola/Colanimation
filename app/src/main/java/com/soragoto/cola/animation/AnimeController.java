@@ -13,12 +13,13 @@ import info.nukoneko.android.lib.nkanimation.NKAnimationBaseController;
  */
 
 public final class AnimeController extends NKAnimationBaseController {
-    final float tick = 0.1f;
+    //final float tick = 0.1f;
     float stateCount = 0.0f;
     float x = 200, y = 200;
     Float ox = null;
     Float oy = null;
-    int value = 200;
+    int radius = 200;
+    float tick = 0.05f;
     @Override
     public void onUpdate() {
         stateCount += tick;
@@ -41,16 +42,16 @@ public final class AnimeController extends NKAnimationBaseController {
         c.drawRect(x, y, x + 100 * (float) Math.sin(stateCount), y + 100 * (float) Math.sin(stateCount), paint);
 
         // *5はスピード調整のためにつけたもの
-        final float px1 = ox - value * (float) Math.sin(0.063f * stateCount * 5);
-        final float py1 = oy - value * (float) Math.cos(0.063f * stateCount * 5);
-        final float px2 = ox - value * (float) Math.sin(0.063f * (stateCount * 5 + 20));
-        final float py2 = oy - value * (float) Math.cos(0.063f * (stateCount * 5 + 20));
-        final float px3 = ox - value * (float) Math.sin(0.063f * (stateCount * 5 + 40));
-        final float py3 = oy - value * (float) Math.cos(0.063f * (stateCount * 5 + 40));
-        final float px4 = ox - value * (float) Math.sin(0.063f * (stateCount * 5 + 60));
-        final float py4 = oy - value * (float) Math.cos(0.063f * (stateCount * 5 + 60));
-        final float px5 = ox - value * (float) Math.sin(0.063f * (stateCount * 5 + 80));
-        final float py5 = oy - value * (float) Math.cos(0.063f * (stateCount * 5 + 80));
+        final float px1 = ox - radius * (float) Math.sin(0.063f * stateCount * 5);
+        final float py1 = oy - radius * (float) Math.cos(0.063f * stateCount * 5);
+        final float px2 = ox - radius * (float) Math.sin(0.063f * (stateCount * 5 + 20));
+        final float py2 = oy - radius * (float) Math.cos(0.063f * (stateCount * 5 + 20));
+        final float px3 = ox - radius * (float) Math.sin(0.063f * (stateCount * 5 + 40));
+        final float py3 = oy - radius * (float) Math.cos(0.063f * (stateCount * 5 + 40));
+        final float px4 = ox - radius * (float) Math.sin(0.063f * (stateCount * 5 + 60));
+        final float py4 = oy - radius * (float) Math.cos(0.063f * (stateCount * 5 + 60));
+        final float px5 = ox - radius * (float) Math.sin(0.063f * (stateCount * 5 + 80));
+        final float py5 = oy - radius * (float) Math.cos(0.063f * (stateCount * 5 + 80));
 
         Path penta = new Path();
         penta.moveTo(px1, py1);
@@ -60,7 +61,7 @@ public final class AnimeController extends NKAnimationBaseController {
         penta.lineTo(px3, py3);
         penta.lineTo(px1, py1);
         c.drawPath(penta, paint);
-        c.drawCircle(ox, oy, value, paint);
+        c.drawCircle(ox, oy, radius, paint);
     }
 
     @Override
@@ -69,7 +70,10 @@ public final class AnimeController extends NKAnimationBaseController {
         y = event.getY();
         return super.onTouchEvent(event);
     }
-    public void setValue(int value){
-        this.value = value;
+    public void setRadius(int radius){
+        this.radius = radius;
+    }
+    public void setSpeed(float speed){
+        this.tick = speed;
     }
 }
