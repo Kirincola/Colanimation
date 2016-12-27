@@ -23,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
 
         final AnimeController controller = new AnimeController();
         binding.animationView.addController( controller );
-        controller.setValue(50);
-
+        controller.setValue( 200 );
+        binding.seek.setProgress( 40 );
+        binding.text.setText("200");
+        
         binding.seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                controller.setValue( progress );
-                binding.text.setText( String.valueOf( progress ) );
+                controller.setValue( progress * 5 );
+                binding.text.setText( String.valueOf( progress * 5 ) );
             }
 
             @Override
