@@ -1,10 +1,14 @@
 package com.soragoto.cola.animation;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.SeekBar;
+
+import com.soragoto.cola.animation.databinding.ActivityMainBinding;
 
 import java.text.ParseException;
 
@@ -15,34 +19,49 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        final ActivityMainBinding binding = DataBindingUtil.setContentView( this, R.layout.activity_main);
 
-        final EditText text = (EditText) findViewById(R.id.text);
-        NKAnimationView anime = (NKAnimationView) findViewById(R.id.animationview);
         final AnimeController controller = new AnimeController();
-        anime.addController( controller );
+        binding.animationView.addController( controller );
         controller.setValue(50);
 
-        text.addTextChangedListener(new TextWatcher() {
+        binding.seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                controller.setValue( progress );
+                binding.text.setText( String.valueOf( progress ) );
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    controller.setValue( Integer.parseInt( text.getText().toString() ) );
-                } catch( android.net.ParseException | NumberFormatException ignore ) {
-
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
+////        binding.seek.addTextChangedListener(new TextWatcher() {
+////            @Override
+////            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+////
+////            }
+////
+////            @Override
+////            public void onTextChanged(CharSequence s, int start, int before, int count) {
+////                try {
+////                    controller.setValue( Integer.parseInt( binding.text.getText().toString() ) );
+////                } catch( android.net.ParseException | NumberFormatException ignore ) {
+////
+////                }
+////
+////            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
     }
 }
